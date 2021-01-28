@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     private Vector2 groundAngleVector;
     private Collider2D playerCollider;
     private float currentSanity;
+    private bool isGhost;
+    private SpriteRenderer playerSprite;
 
     void Awake()
     {
@@ -36,6 +38,7 @@ public class Player : MonoBehaviour
     {
         playerRB = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<Collider2D>();
+        playerSprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -69,6 +72,11 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             playerRB.AddForce(Vector2.up * jumpForce);
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            ToggleGhost();
         }
     }
 
@@ -113,5 +121,13 @@ public class Player : MonoBehaviour
     public float GetSanityLevel()
     {
         return currentSanity;
+    }
+
+    void ToggleGhost()
+    {
+        isGhost = !isGhost;
+        playerSprite.color  = new Color(1,1,1, isGhost ? 0.5f : 1f);
+        Physics2D.IgnoreLayerCollision(9,11, !isGhost);
+        Physics2D.IgnoreLayerCollision(10,11, isGhost);
     }
 }
