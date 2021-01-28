@@ -24,11 +24,9 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        //Debug.Log(Mathf.Abs(Player.instance.transform.position.x - transform.position.x));
         if (Mathf.Abs(Player.instance.transform.position.y - transform.position.y - upOffset) > marginOffset ||
             Mathf.Abs(Player.instance.transform.position.x - transform.position.x) > marginOffsetX)
         {
-            //Debug.Log("Should be following!");
             followPosition = Player.instance.transform.position - Vector3.forward * 10f + upOffset * Vector3.up;
         }
         transform.position = Vector3.Lerp(transform.position, followPosition, followSpeed * Time.deltaTime);

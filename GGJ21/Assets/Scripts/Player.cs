@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     private Vector2 inputMovement;
     private Vector2 groundAngleVector;
     private Collider2D playerCollider;
+    private float currentSanity;
 
     void Awake()
     {
@@ -107,5 +108,10 @@ public class Player : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(groundCheckPositionTransform.position, groundCheckRadius);
+    }
+
+    public float GetSanityLevel()
+    {
+        return currentSanity;
     }
 }
