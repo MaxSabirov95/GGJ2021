@@ -7,6 +7,12 @@ public class UIManager : MonoBehaviour
 
     public GameObject pauseMenu;
 
+    private void Start()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+        gameIsPaused = false;
+    }
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape))
