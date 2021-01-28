@@ -6,7 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public static Player instance;
-
+    
     [SerializeField] private float moveSpeed = 2.5f;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float jumpForce = 8f;
@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D playerRB;
     private Vector2 inputMovement;
+    private SpriteRenderer sprite;
+    private bool isGhost;
 
     void Awake()
     {
@@ -28,6 +30,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         playerRB = GetComponent<Rigidbody2D>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -43,6 +46,11 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             playerRB.AddForce(Vector2.up * jumpForce);
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            ToggleGhost();
         }
     }
 
@@ -82,5 +90,26 @@ public class Player : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(groundCheckPositionTransform.position, groundCheckRadius);
+    }
+
+    void ToggleGhost()
+    {
+        isGhost = !isGhost;
+        if (isGhost)
+        {
+            Color spriteColor = sprite.color;
+            spriteColor.a = 125;
+            sprite.color = spriteColor;
+            Physics.IgnoreLayerCollision(11, 9,true);
+            Physics.IgnoreLayerCollision(11, 10, false);
+        }
+        else
+        {
+            Color spriteColor = sprite.color;
+            spriteColor.a = 255;
+            sprite.color = spriteColor;
+            Physics.IgnoreLayerCollision(11, 9, false);
+            Physics.IgnoreLayerCollision(11, 10,true);
+        }
     }
 }
