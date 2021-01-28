@@ -694,6 +694,11 @@ MonoBehaviour:
     m_Bits: 256
   groundCheckRadius: 0.1
   groundCheckPositionTransform: {fileID: 1312468818}
+  initialSanity: 100
+  sanityDegrationSpeed: 5
+  slipperyMaterial2D: {fileID: 6200000, guid: faf020b6e50a12a4ba91e8e65b636181, type: 2}
+  fullFrictionMaterial2D: {fileID: 6200000, guid: bec11ec5108394d4d9812b2bc9d41bb1,
+    type: 2}
 --- !u!4 &946198185
 Transform:
   m_ObjectHideFlags: 0

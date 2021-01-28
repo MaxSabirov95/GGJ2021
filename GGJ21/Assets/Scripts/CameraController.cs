@@ -24,7 +24,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        Debug.Log(Mathf.Abs(Player.instance.transform.position.x - transform.position.x));
+        //Debug.Log(Mathf.Abs(Player.instance.transform.position.x - transform.position.x));
         if (Mathf.Abs(Player.instance.transform.position.y - transform.position.y - upOffset) > marginOffset ||
             Mathf.Abs(Player.instance.transform.position.x - transform.position.x) > marginOffsetX)
         {
