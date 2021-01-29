@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
@@ -6,6 +7,8 @@ public class UIManager : MonoBehaviour
     public static bool gameIsPaused = false;
 
     public GameObject pauseMenu;
+    public AudioMixer audioMixer;
+    public GameObject settingsMenu;
 
     private void Start()
     {
@@ -46,6 +49,23 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("Loading menu...");
         SceneManager.LoadScene("Main Menu");
+    }
+
+    public void SettingsScreen()
+    {
+        pauseMenu.SetActive(false);
+        settingsMenu.SetActive(true);
+    }
+
+    public void Back()
+    {
+        pauseMenu.SetActive(true);
+        settingsMenu.SetActive(false);
+    }
+
+    public void SetVolume(float volume)
+    {
+        audioMixer.SetFloat("volume", volume);
     }
 
     public void QuitGame()

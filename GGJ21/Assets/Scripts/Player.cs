@@ -7,25 +7,49 @@ public class Player : MonoBehaviour
 {
     public static Player instance;
 
+    [Header("Speed Parameters")]
     [SerializeField] private float moveSpeed = 2.5f;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float jumpForce = 8f;
     [SerializeField] private float lowJumpMultiplier = 2f;
     [SerializeField] private float fallMultiplier = 2.5f;
+    [SerializeField] private float climbSpeed = 10f;
+    [SerializeField] private float maxClimbSpeed = 7f;
+    [Space]
+    [Header("Ground Checking")]
     [SerializeField] private LayerMask ground;
     [SerializeField] private float groundCheckRadius = 0.5f;
     [SerializeField] private Transform groundCheckPositionTransform;
+    [Space]
+    [Header("Sanity")]
     [SerializeField] private float initialSanity = 100f;
     [SerializeField] private float sanityDegrationSpeed = 5f;
+    [Space]
+    [Header("Physics Materials")]
     [SerializeField] private PhysicsMaterial2D slipperyMaterial2D;
     [SerializeField] private PhysicsMaterial2D fullFrictionMaterial2D;
+    [Space]
+    [Header("Climb Checking")]
+    [SerializeField] private LayerMask climbLayer;
+    [SerializeField] private float climbCheckRadius = 0.5f;
 
     private Rigidbody2D playerRB;
     private Vector2 inputMovement;
     private Vector2 groundAngleVector;
     private Collider2D playerCollider;
     public float currentSanity;
+    private bool isGhost;
     private SpriteRenderer playerSprite;
+    private State playerState;
+
+    delegate void PlayerAction();
+    private PlayerAction DoActionByState;
+
+    delegate void PlayerInput();
+    private PlayerInput InputByState;
+
+    delegate void GroundCheck();
+    GroundCheck CheckForGround;
 
     void Awake()
     {
@@ -39,15 +63,19 @@ public class Player : MonoBehaviour
         playerRB = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<Collider2D>();
         playerSprite = GetComponentInChildren<SpriteRenderer>();
+        playerState = new Idle();
+        DoActionByState = Move;
+        InputByState = HandleInputNormal;
     }
 
     // Update is called once per frame
     void Update()
     {
-        HandleInput();
+        InputByState();
         HandleSlopes();
+        CheckForGround?.Invoke();
 
-        if(Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             currentSanity -= 9;
             Debug.Log(currentSanity);
@@ -56,6 +84,9 @@ public class Player : MonoBehaviour
                 BlackBoard.soundsManager.TimeOutWhispers(0, currentSanity);
             }
         }
+
+        Debug.Log(CanClimb());
+        //Debug.Log(playerState);
     }
 
     private void HandleSlopes()
@@ -75,28 +106,59 @@ public class Player : MonoBehaviour
         else groundAngleVector = Vector2.right;
     }
 
-    private void HandleInput()
+    private void HandleInputNormal()
     {
         float xMovement = Input.GetAxisRaw("Horizontal");
+        playerState.HandleStateTransition(this, Mathf.Abs(xMovement) > 0 ? StateTransition.MovementDown : StateTransition.MovementUp);
         inputMovement = xMovement * groundAngleVector * moveSpeed;
-        if (Input.GetButtonDown("Jump") && IsGrounded())
+        if (Input.GetButtonDown("Jump"))
         {
-            playerRB.AddForce(Vector2.up * jumpForce);
+            playerState.HandleStateTransition(this, StateTransition.Jump);
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             ToggleGhost();
         }
+
+        if (Input.GetAxisRaw("Vertical") > 0)
+        {
+            playerState.HandleStateTransition(this, StateTransition.Climb);
+        }
+    }
+
+    private void HandleInputClimbing()
+    {
+        inputMovement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * climbSpeed;
+    }
+
+    public void Jump()
+    {
+        playerRB.AddForce(Vector2.up * jumpForce);
+        StartCoroutine(WaitToCheckForGround());
+    }
+
+    private IEnumerator WaitToCheckForGround()
+    {
+        yield return new WaitForSeconds(0.3f);
+        CheckForGround = DoCheckForLanding;
+    }
+
+    void DoCheckForLanding()
+    {
+        if (IsGrounded())
+        {
+            playerState.HandleStateTransition(this, StateTransition.Land);
+            CheckForGround = null;
+        }
     }
 
     void FixedUpdate()
     {
-        Move();
-        HandleJump();
+        DoActionByState();
     }
 
-    private void HandleJump()
+    private void HandleJumpGravity()
     {
         if (playerRB.velocity.y < 0)
         {
@@ -114,9 +176,10 @@ public class Player : MonoBehaviour
         Vector2 vel = playerRB.velocity;
         vel.x = Mathf.Clamp(vel.x, -maxSpeed, maxSpeed);
         playerRB.velocity = vel;
+        HandleJumpGravity();
     }
 
-    bool IsGrounded()
+    public bool IsGrounded()
     {
         Collider2D groundCollider = Physics2D.OverlapCircle(groundCheckPositionTransform.position, groundCheckRadius, ground);
         return groundCollider != null;
@@ -135,12 +198,47 @@ public class Player : MonoBehaviour
 
     void ToggleGhost()
     {
-        if (BlackBoard.gameManager.isGhostAbilityPicked)
+        isGhost = !isGhost;
+        playerSprite.color  = new Color(1,1,1, isGhost ? 0.5f : 1f);
+        Physics2D.IgnoreLayerCollision(9,11, !isGhost);
+        Physics2D.IgnoreLayerCollision(10,11, isGhost);
+    }
+
+    public void StartClimb()
+    {
+        playerRB.gravityScale = 0f;
+        playerRB.velocity = new Vector2(playerRB.velocity.x, 0f);
+        DoActionByState = DoClimb;
+        InputByState = HandleInputClimbing;
+    }
+
+    void DoClimb()
+    {
+        playerRB.AddForce(inputMovement);
+        Vector2 vel = playerRB.velocity;
+        vel.x = Mathf.Clamp(vel.x, -maxClimbSpeed, maxClimbSpeed);
+        vel.y = Mathf.Clamp(vel.y, -maxClimbSpeed, maxClimbSpeed);
+        playerRB.velocity = vel;
+        if (!CanClimb())
         {
-            BlackBoard.gameManager.isGhost = !BlackBoard.gameManager.isGhost;
-            playerSprite.color = new Color(1, 1, 1, BlackBoard.gameManager.isGhost ? 0.5f : 1f);
-            Physics2D.IgnoreLayerCollision(9, 11, !BlackBoard.gameManager.isGhost);
-            Physics2D.IgnoreLayerCollision(10, 11, BlackBoard.gameManager.isGhost);
+            playerState.HandleStateTransition(this, StateTransition.MovementUp);
         }
+    }
+
+    public void SetNewState(State _s)
+    {
+        playerState = _s;
+    }
+
+    public bool CanClimb()
+    {
+        return Physics2D.OverlapCircle(transform.position, climbCheckRadius, climbLayer) != null;
+    }
+
+    public void StopClimbing()
+    {
+        playerRB.gravityScale = 1f;
+        DoActionByState = Move;
+        InputByState = HandleInputNormal;
     }
 }
