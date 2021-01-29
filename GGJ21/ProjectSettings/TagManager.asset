@@ -15,8 +15,8 @@ TagManager:
   - 
   - 
   - Ground
-  - InteractLayerGhost
-  - InteractLayerBody
+  - Green Platform
+  - Brown Platform
   - Player
   - Climb
   - 
