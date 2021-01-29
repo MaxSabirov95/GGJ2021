@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     private Vector2 inputMovement;
     private Vector2 groundAngleVector;
     private Collider2D playerCollider;
-    private float currentSanity;
+    public float currentSanity;
     private bool isGhost;
     private SpriteRenderer playerSprite;
 
@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentSanity = initialSanity;
         playerRB = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<Collider2D>();
         playerSprite = GetComponentInChildren<SpriteRenderer>();
@@ -46,6 +47,16 @@ public class Player : MonoBehaviour
     {
         HandleInput();
         HandleSlopes();
+
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            currentSanity -= 9;
+            Debug.Log(currentSanity);
+            if (currentSanity <= 40)
+            {
+                BlackBoard.soundsManager.SpecialSoundsList(0, currentSanity);
+            }
+        }
     }
 
     private void HandleSlopes()
