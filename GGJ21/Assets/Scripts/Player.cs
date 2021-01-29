@@ -150,7 +150,7 @@ public class Player : MonoBehaviour
         if (IsGrounded())
         {
             playerState.HandleStateTransition(this, StateTransition.Land);
-            BlackBoard.soundsManager.SoundsList(7);//jump sound
+            //BlackBoard.soundsManager.SoundsList(7);//jump sound
             CheckForGround = null;
         }
     }
