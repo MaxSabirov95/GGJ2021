@@ -64,7 +64,7 @@ public class Player : MonoBehaviour
     {
         walkSound = GetComponent<AudioSource>();
         currentSanity = initialSanity;
-        //sanityBar.SetMaxSenity(currentSanity);
+        sanityBar.SetMaxSenity(currentSanity);
         playerRB = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<Collider2D>();
         playerSprite = GetComponentInChildren<SpriteRenderer>();
@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             currentSanity -= 9;
-            //sanityBar.SetSenity(currentSanity);
+            sanityBar.SetSenity(currentSanity);
             if (currentSanity <= 40 && !isSanity)
             {
                 isSanity = true;
@@ -102,19 +102,6 @@ public class Player : MonoBehaviour
             Debug.DrawRay(hit.point, Vector2.Perpendicular(hit.normal), Color.green);
             groundAngleVector = -Vector2.Perpendicular(hit.normal);
             float xMovement = Input.GetAxisRaw("Horizontal");
-
-            //if (xMovement != 0 && IsGrounded())
-            //{
-            //    if (!walkSound.isPlaying)
-            //    {
-            //        int randomSound = Random.Range(0, stepsSounds.Length);
-            //        walkSound.PlayOneShot(stepsSounds[randomSound]);
-            //    }
-            //}
-            //else
-            //{
-            //    walkSound.Stop();
-            //}
 
             if (Mathf.Abs(xMovement) < Mathf.Epsilon)
             {
@@ -168,7 +155,7 @@ public class Player : MonoBehaviour
         if (IsGrounded())
         {
             playerState.HandleStateTransition(this, StateTransition.Land);
-            //BlackBoard.soundsManager.SoundsList(7);//jump sound
+            BlackBoard.soundsManager.SoundsList(7);//jump sound
             CheckForGround = null;
         }
     }
@@ -193,6 +180,18 @@ public class Player : MonoBehaviour
     private void Move()
     {
         playerRB.AddForce(inputMovement);
+        if (inputMovement.x != 0 && IsGrounded())
+        {
+            if (!walkSound.isPlaying)
+            {
+                int randomSound = Random.Range(0, stepsSounds.Length);
+                walkSound.PlayOneShot(stepsSounds[randomSound]);
+            }
+        }
+        else
+        {
+            walkSound.Stop();
+        }
         Vector2 vel = playerRB.velocity;
         vel.x = Mathf.Clamp(vel.x, -maxSpeed, maxSpeed);
         playerRB.velocity = vel;
