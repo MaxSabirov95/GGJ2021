@@ -100,7 +100,20 @@ public class Player : MonoBehaviour
         {
             Debug.DrawRay(hit.point, Vector2.Perpendicular(hit.normal), Color.green);
             groundAngleVector = -Vector2.Perpendicular(hit.normal);
-            float xMovement = Input.GetAxisRaw("Horizontal");           
+            float xMovement = Input.GetAxisRaw("Horizontal");
+
+            if (xMovement != 0 && IsGrounded())
+            {
+                if (!walkSound.isPlaying)
+                {
+                    int randomSound = Random.Range(0, stepsSounds.Length);
+                    walkSound.PlayOneShot(stepsSounds[randomSound]);
+                }
+            }
+            else
+            {
+                walkSound.Stop();
+            }
 
             if (Mathf.Abs(xMovement) < Mathf.Epsilon)
             {
@@ -179,18 +192,6 @@ public class Player : MonoBehaviour
     private void Move()
     {
         playerRB.AddForce(inputMovement);
-        if (inputMovement.x != 0 && IsGrounded())
-        {
-            if (!walkSound.isPlaying)
-            {
-                int randomSound = Random.Range(0, stepsSounds.Length);
-                walkSound.PlayOneShot(stepsSounds[randomSound]);
-            }
-        }
-        else
-        {
-            walkSound.Stop();
-        }
         Vector2 vel = playerRB.velocity;
         vel.x = Mathf.Clamp(vel.x, -maxSpeed, maxSpeed);
         playerRB.velocity = vel;
