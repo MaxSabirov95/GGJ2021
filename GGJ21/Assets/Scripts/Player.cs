@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
             Debug.Log(currentSanity);
             if (currentSanity <= 40)
             {
-                BlackBoard.soundsManager.SpecialSoundsList(0, currentSanity);
+                BlackBoard.soundsManager.TimeOutWhispers(0, currentSanity);
             }
         }
     }

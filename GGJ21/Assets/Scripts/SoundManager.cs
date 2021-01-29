@@ -22,7 +22,7 @@ public class SoundManager : MonoBehaviour
     }//--Game sounds list
 
 
-    public void SpecialSoundsList(int SoundNumber, float num)
+    public void TimeOutWhispers(int SoundNumber, float num)
     {
         AudioSrc.PlayOneShot(Sounds[SoundNumber]);
         AudioSrc.volume = (100 - num)/100;
