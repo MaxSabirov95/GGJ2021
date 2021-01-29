@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +10,8 @@ public class UIManager : MonoBehaviour
     public GameObject pauseMenu;
     public AudioMixer audioMixer;
     public GameObject settingsMenu;
+    public Slider musicSlider;
+    public Slider sfxSlider;
 
     private void Start()
     {
@@ -63,14 +66,26 @@ public class UIManager : MonoBehaviour
         settingsMenu.SetActive(false);
     }
 
-    public void SetVolume(float volume)
+    public void SetMusicVolume(float music)
     {
-        audioMixer.SetFloat("volume", volume);
+        audioMixer.SetFloat("Music", music);
+        MainMenu.musicValue = music;
+    }
+    public void SetSFXVolume(float sfx)
+    {
+        audioMixer.SetFloat("SFX", sfx);
+        MainMenu.sfxValue = sfx;
     }
 
     public void QuitGame()
     {
         Debug.Log("Quitting game...");
         Application.Quit();
+    }
+
+    private void OnEnable()
+    {
+        musicSlider.value = MainMenu.musicValue;
+        sfxSlider.value = MainMenu.sfxValue;
     }
 }
