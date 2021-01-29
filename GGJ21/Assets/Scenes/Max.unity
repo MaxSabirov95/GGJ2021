@@ -919,16 +919,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f4a5e5c078459642a932e47e7e85cf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSound: {fileID: 0}
+  stepsSounds: []
   moveSpeed: 2.5
   maxSpeed: 5
   jumpForce: 8
   lowJumpMultiplier: 2
   fallMultiplier: 2.5
+  climbSpeed: 10
+  maxClimbSpeed: 7
   ground:
     serializedVersion: 2
     m_Bits: 256
   groundCheckRadius: 0.5
   groundCheckPositionTransform: {fileID: 1864434025}
+  initialSanity: 100
+  sanityDegrationSpeed: 5
+  slipperyMaterial2D: {fileID: 0}
+  fullFrictionMaterial2D: {fileID: 0}
+  climbLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  climbCheckRadius: 0.5
+  currentSanity: 0
+  sanityBar: {fileID: 0}
 --- !u!1 &1756170801
 GameObject:
   m_ObjectHideFlags: 0
