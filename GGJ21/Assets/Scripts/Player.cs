@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        Debug.Log(CanClimb());
+        //Debug.Log(CanClimb());
         //Debug.Log(playerState);
     }
 
@@ -200,8 +200,8 @@ public class Player : MonoBehaviour
     {
         BlackBoard.gameManager.isGhost = !BlackBoard.gameManager.isGhost;
         playerSprite.color  = new Color(1,1,1, BlackBoard.gameManager.isGhost ? 0.5f : 1f);
-        Physics2D.IgnoreLayerCollision(9,11, !BlackBoard.gameManager.isGhost);
-        Physics2D.IgnoreLayerCollision(10,11, BlackBoard.gameManager.isGhost);
+        Physics2D.IgnoreLayerCollision(11,9, !BlackBoard.gameManager.isGhost);
+        Physics2D.IgnoreLayerCollision(11,10, BlackBoard.gameManager.isGhost);
     }
 
     public void StartClimb()
