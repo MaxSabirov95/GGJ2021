@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        Debug.Log(CanClimb());
+        //Debug.Log(CanClimb());
         //Debug.Log(playerState);
     }
 
