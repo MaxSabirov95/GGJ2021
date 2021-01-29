@@ -103,19 +103,6 @@ public class Player : MonoBehaviour
             groundAngleVector = -Vector2.Perpendicular(hit.normal);
             float xMovement = Input.GetAxisRaw("Horizontal");
 
-            if (xMovement != 0 && IsGrounded())
-            {
-                if (!walkSound.isPlaying)
-                {
-                    int randomSound = Random.Range(0, stepsSounds.Length);
-                    walkSound.PlayOneShot(stepsSounds[randomSound]);
-                }
-            }
-            else
-            {
-                walkSound.Stop();
-            }
-
             if (Mathf.Abs(xMovement) < Mathf.Epsilon)
             {
                 playerCollider.sharedMaterial = Vector2.Angle(hit.normal, Vector2.up) > 10f ? fullFrictionMaterial2D : slipperyMaterial2D;
@@ -193,6 +180,18 @@ public class Player : MonoBehaviour
     private void Move()
     {
         playerRB.AddForce(inputMovement);
+        if (inputMovement.x != 0 && IsGrounded())
+        {
+            if (!walkSound.isPlaying)
+            {
+                int randomSound = Random.Range(0, stepsSounds.Length);
+                walkSound.PlayOneShot(stepsSounds[randomSound]);
+            }
+        }
+        else
+        {
+            walkSound.Stop();
+        }
         Vector2 vel = playerRB.velocity;
         vel.x = Mathf.Clamp(vel.x, -maxSpeed, maxSpeed);
         playerRB.velocity = vel;
