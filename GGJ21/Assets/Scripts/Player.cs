@@ -64,7 +64,7 @@ public class Player : MonoBehaviour
     {
         walkSound = GetComponent<AudioSource>();
         currentSanity = initialSanity;
-        sanityBar.SetMaxSenity(currentSanity);
+        //sanityBar.SetMaxSenity(currentSanity);
         playerRB = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<Collider2D>();
         playerSprite = GetComponentInChildren<SpriteRenderer>();
@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             currentSanity -= 9;
-            sanityBar.SetSenity(currentSanity);
+            //sanityBar.SetSenity(currentSanity);
             if (currentSanity <= 40 && !isSanity)
             {
                 isSanity = true;
@@ -103,18 +103,18 @@ public class Player : MonoBehaviour
             groundAngleVector = -Vector2.Perpendicular(hit.normal);
             float xMovement = Input.GetAxisRaw("Horizontal");
 
-            if (xMovement != 0 && IsGrounded())
-            {
-                if (!walkSound.isPlaying)
-                {
-                    int randomSound = Random.Range(0, stepsSounds.Length);
-                    walkSound.PlayOneShot(stepsSounds[randomSound]);
-                }
-            }
-            else
-            {
-                walkSound.Stop();
-            }
+            //if (xMovement != 0 && IsGrounded())
+            //{
+            //    if (!walkSound.isPlaying)
+            //    {
+            //        int randomSound = Random.Range(0, stepsSounds.Length);
+            //        walkSound.PlayOneShot(stepsSounds[randomSound]);
+            //    }
+            //}
+            //else
+            //{
+            //    walkSound.Stop();
+            //}
 
             if (Mathf.Abs(xMovement) < Mathf.Epsilon)
             {
@@ -168,7 +168,7 @@ public class Player : MonoBehaviour
         if (IsGrounded())
         {
             playerState.HandleStateTransition(this, StateTransition.Land);
-            BlackBoard.soundsManager.SoundsList(7);//jump sound
+            //BlackBoard.soundsManager.SoundsList(7);//jump sound
             CheckForGround = null;
         }
     }
