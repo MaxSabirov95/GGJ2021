@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     public float currentSanity;
     private bool isGhost;
     private SpriteRenderer playerSprite;
+    private bool inSafeZone;
     private State playerState;
 
     delegate void PlayerAction();
@@ -198,6 +199,7 @@ public class Player : MonoBehaviour
 
     void ToggleGhost()
     {
+        if (!BlackBoard.gameManager.isGhostAbilityPicked) return;
         BlackBoard.gameManager.isGhost = !BlackBoard.gameManager.isGhost;
         playerSprite.color  = new Color(1,1,1, BlackBoard.gameManager.isGhost ? 0.5f : 1f);
         Physics2D.IgnoreLayerCollision(11,9, !BlackBoard.gameManager.isGhost);
@@ -240,5 +242,10 @@ public class Player : MonoBehaviour
         playerRB.gravityScale = 1f;
         DoActionByState = Move;
         InputByState = HandleInputNormal;
+    }
+
+    public void SetInSafeZone(bool value)
+    {
+        inSafeZone = value;
     }
 }
