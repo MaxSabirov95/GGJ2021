@@ -6,7 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public static Player instance;
-    
+
     [SerializeField] private float moveSpeed = 2.5f;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float jumpForce = 8f;
@@ -15,11 +15,18 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask ground;
     [SerializeField] private float groundCheckRadius = 0.5f;
     [SerializeField] private Transform groundCheckPositionTransform;
+    [SerializeField] private float initialSanity = 100f;
+    [SerializeField] private float sanityDegrationSpeed = 5f;
+    [SerializeField] private PhysicsMaterial2D slipperyMaterial2D;
+    [SerializeField] private PhysicsMaterial2D fullFrictionMaterial2D;
 
     private Rigidbody2D playerRB;
     private Vector2 inputMovement;
-    private SpriteRenderer sprite;
+    private Vector2 groundAngleVector;
+    private Collider2D playerCollider;
+    private float currentSanity;
     private bool isGhost;
+    private SpriteRenderer playerSprite;
 
     void Awake()
     {
@@ -30,19 +37,38 @@ public class Player : MonoBehaviour
     void Start()
     {
         playerRB = GetComponent<Rigidbody2D>();
-        sprite = GetComponentInChildren<SpriteRenderer>();
+        playerCollider = GetComponent<Collider2D>();
+        playerSprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
         HandleInput();
+        HandleSlopes();
+    }
+
+    private void HandleSlopes()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, ground);
+        if (hit)
+        {
+            Debug.DrawRay(hit.point, Vector2.Perpendicular(hit.normal), Color.green);
+            groundAngleVector = -Vector2.Perpendicular(hit.normal);
+            float xMovement = Input.GetAxisRaw("Horizontal");
+            if (Mathf.Abs(xMovement) < Mathf.Epsilon)
+            {
+                playerCollider.sharedMaterial = Vector2.Angle(hit.normal, Vector2.up) > 10f ? fullFrictionMaterial2D : slipperyMaterial2D;
+            }
+            else playerCollider.sharedMaterial = slipperyMaterial2D;
+        }
+        else groundAngleVector = Vector2.right;
     }
 
     private void HandleInput()
     {
         float xMovement = Input.GetAxisRaw("Horizontal");
-        inputMovement = xMovement * Vector2.right * moveSpeed;
+        inputMovement = xMovement * groundAngleVector * moveSpeed;
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             playerRB.AddForce(Vector2.up * jumpForce);
@@ -92,24 +118,16 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireSphere(groundCheckPositionTransform.position, groundCheckRadius);
     }
 
+    public float GetSanityLevel()
+    {
+        return currentSanity;
+    }
+
     void ToggleGhost()
     {
         isGhost = !isGhost;
-        if (isGhost)
-        {
-            Color spriteColor = sprite.color;
-            spriteColor.a = 125;
-            sprite.color = spriteColor;
-            Physics.IgnoreLayerCollision(11, 9,true);
-            Physics.IgnoreLayerCollision(11, 10, false);
-        }
-        else
-        {
-            Color spriteColor = sprite.color;
-            spriteColor.a = 255;
-            sprite.color = spriteColor;
-            Physics.IgnoreLayerCollision(11, 9, false);
-            Physics.IgnoreLayerCollision(11, 10,true);
-        }
+        playerSprite.color  = new Color(1,1,1, isGhost ? 0.5f : 1f);
+        Physics2D.IgnoreLayerCollision(9,11, !isGhost);
+        Physics2D.IgnoreLayerCollision(10,11, isGhost);
     }
 }
