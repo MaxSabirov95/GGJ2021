@@ -6,6 +6,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public static Player instance;
+    public AudioSource walkSound;
+    public AudioClip[] stepsSounds;
 
     [Header("Speed Parameters")]
     [SerializeField] private float moveSpeed = 2.5f;
@@ -39,6 +41,7 @@ public class Player : MonoBehaviour
     private Collider2D playerCollider;
     public float currentSanity;
     bool isSanity;
+    public SanityBar sanityBar;
     private SpriteRenderer playerSprite;
     private bool inSafeZone;
     private State playerState;
@@ -59,7 +62,9 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        walkSound = GetComponent<AudioSource>();
         currentSanity = initialSanity;
+        sanityBar.SetMaxSenity(currentSanity);
         playerRB = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<Collider2D>();
         playerSprite = GetComponentInChildren<SpriteRenderer>();
@@ -68,7 +73,6 @@ public class Player : MonoBehaviour
         InputByState = HandleInputNormal;
     }
 
-    // Update is called once per frame
     void Update()
     {
         InputByState();
@@ -78,8 +82,8 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             currentSanity -= 9;
-            Debug.Log(currentSanity);
-            if (currentSanity <= 40&& !isSanity)
+            sanityBar.SetSenity(currentSanity);
+            if (currentSanity <= 40 && !isSanity)
             {
                 isSanity = true;
                 BlackBoard.soundsManager.TimeOutWhispers(0, currentSanity);
@@ -98,6 +102,20 @@ public class Player : MonoBehaviour
             Debug.DrawRay(hit.point, Vector2.Perpendicular(hit.normal), Color.green);
             groundAngleVector = -Vector2.Perpendicular(hit.normal);
             float xMovement = Input.GetAxisRaw("Horizontal");
+
+            if (xMovement != 0 && IsGrounded())
+            {
+                if (!walkSound.isPlaying)
+                {
+                    int randomSound = Random.Range(0, stepsSounds.Length);
+                    walkSound.PlayOneShot(stepsSounds[randomSound]);
+                }
+            }
+            else
+            {
+                walkSound.Stop();
+            }
+
             if (Mathf.Abs(xMovement) < Mathf.Epsilon)
             {
                 playerCollider.sharedMaterial = Vector2.Angle(hit.normal, Vector2.up) > 10f ? fullFrictionMaterial2D : slipperyMaterial2D;
