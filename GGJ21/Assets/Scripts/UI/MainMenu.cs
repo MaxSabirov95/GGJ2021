@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
@@ -8,13 +9,20 @@ public class MainMenu : MonoBehaviour
     public GameObject settingsMenu;
     public GameObject mainMenu;
     public GameObject creditMenu;
+    public static float musicValue;
+    public static float sfxValue;
+    public Slider musicSlider;
+    public Slider sfxSlider;
+
     public void SetMusicVolume (float music)
     {
         audioMixer.SetFloat("Music", music);
+        musicValue = music;
     }
     public void SetSFXVolume(float sfx)
     {
         audioMixer.SetFloat("SFX", sfx);
+        sfxValue = sfx;
     }
 
     private void Start()
@@ -22,6 +30,8 @@ public class MainMenu : MonoBehaviour
         mainMenu.SetActive(true);
         settingsMenu.SetActive(false);
         creditMenu.SetActive(false);
+        musicSlider.value = 0f;
+        sfxSlider.value = 0f;
     }
 
     public void OpenSettings()
@@ -51,5 +61,13 @@ public class MainMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    private void OnEnable()
+    {
+        SetMusicVolume(musicValue);
+        musicSlider.value = musicValue;
+        SetSFXVolume(sfxValue);
+        sfxSlider.value = sfxValue;
     }
 }
