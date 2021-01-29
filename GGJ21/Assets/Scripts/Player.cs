@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
     bool isSanity;
     public SanityBar sanityBar;
     private SpriteRenderer playerSprite;
+    private bool inSafeZone;
     private State playerState;
 
     delegate void PlayerAction();
@@ -63,7 +64,7 @@ public class Player : MonoBehaviour
     {
         walkSound = GetComponent<AudioSource>();
         currentSanity = initialSanity;
-        sanityBar.SetMaxSenity(currentSanity);
+        //sanityBar.SetMaxSenity(currentSanity);
         playerRB = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<Collider2D>();
         playerSprite = GetComponentInChildren<SpriteRenderer>();
@@ -81,7 +82,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             currentSanity -= 9;
-            sanityBar.SetSenity(currentSanity);
+            //sanityBar.SetSenity(currentSanity);
             if (currentSanity <= 40 && !isSanity)
             {
                 isSanity = true;
@@ -102,18 +103,18 @@ public class Player : MonoBehaviour
             groundAngleVector = -Vector2.Perpendicular(hit.normal);
             float xMovement = Input.GetAxisRaw("Horizontal");
 
-            if (xMovement != 0 && IsGrounded())
-            {
-                if (!walkSound.isPlaying)
-                {
-                    int randomSound = Random.Range(0, stepsSounds.Length);
-                    walkSound.PlayOneShot(stepsSounds[randomSound]);
-                }
-            }
-            else
-            {
-                walkSound.Stop();
-            }
+            //if (xMovement != 0 && IsGrounded())
+            //{
+            //    if (!walkSound.isPlaying)
+            //    {
+            //        int randomSound = Random.Range(0, stepsSounds.Length);
+            //        walkSound.PlayOneShot(stepsSounds[randomSound]);
+            //    }
+            //}
+            //else
+            //{
+            //    walkSound.Stop();
+            //}
 
             if (Mathf.Abs(xMovement) < Mathf.Epsilon)
             {
@@ -167,7 +168,7 @@ public class Player : MonoBehaviour
         if (IsGrounded())
         {
             playerState.HandleStateTransition(this, StateTransition.Land);
-            BlackBoard.soundsManager.SoundsList(7);//jump sound
+            //BlackBoard.soundsManager.SoundsList(7);//jump sound
             CheckForGround = null;
         }
     }
@@ -217,6 +218,7 @@ public class Player : MonoBehaviour
 
     void ToggleGhost()
     {
+        if (!BlackBoard.gameManager.isGhostAbilityPicked) return;
         BlackBoard.gameManager.isGhost = !BlackBoard.gameManager.isGhost;
         playerSprite.color  = new Color(1,1,1, BlackBoard.gameManager.isGhost ? 0.5f : 1f);
         Physics2D.IgnoreLayerCollision(11,9, !BlackBoard.gameManager.isGhost);
@@ -259,5 +261,10 @@ public class Player : MonoBehaviour
         playerRB.gravityScale = 1f;
         DoActionByState = Move;
         InputByState = HandleInputNormal;
+    }
+
+    public void SetInSafeZone(bool value)
+    {
+        inSafeZone = value;
     }
 }
