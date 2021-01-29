@@ -6,6 +6,7 @@ public class SoundManager : MonoBehaviour
 {
     public AudioClip[] Sounds;
     public AudioSource BackgroundMusic;
+    public AudioSource voicesMusic;
 
     private static AudioSource AudioSrc;//--Main Audio source
 
@@ -14,7 +15,9 @@ public class SoundManager : MonoBehaviour
         BlackBoard.soundsManager = this;
         BackgroundMusic.Play();
         AudioSrc = GetComponent<AudioSource>();
+        voicesMusic = GetComponent<AudioSource>();
     }
+
 
     public void SoundsList(int SoundNumber)
     {
@@ -24,8 +27,7 @@ public class SoundManager : MonoBehaviour
 
     public void TimeOutWhispers(int SoundNumber, float num)
     {
-        AudioSrc.PlayOneShot(Sounds[SoundNumber]);
-        AudioSrc.volume = (100 - num)/100;
-        Debug.Log(AudioSrc.volume);
+        voicesMusic.PlayOneShot(Sounds[SoundNumber]);
+        voicesMusic.volume = (100 - num)/100;
     }//--Game sounds list
 }

@@ -27,8 +27,8 @@ Material:
     m_Floats:
     - Vector1_43A884E1: 0.01
     - Vector1_A77DB6F8: 0.01
-    - Vector1_F7BC56C: 360
-    - Vector1_FB742DC6: 400
+    - Vector1_F7BC56C: 100
+    - Vector1_FB742DC6: 150
     m_Colors:
     - Color_D1727946: {r: 1, g: 1, b: 1, a: 0.19607843}
     - Color_D9F0A34A: {r: 1, g: 1, b: 1, a: 0.39215687}
