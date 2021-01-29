@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
     //    followPosition = transform.position;
     //}
     
-    public float marginOffsetX;
+    private float marginOffsetX;
 
     void Start()
     {
