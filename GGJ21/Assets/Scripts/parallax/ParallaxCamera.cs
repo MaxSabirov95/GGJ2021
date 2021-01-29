@@ -4,7 +4,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class ParallaxCamera : MonoBehaviour
 {
-    public delegate void ParallaxCameraDelegate(float deltaMovement);
+    public delegate void ParallaxCameraDelegate(float deltaMovementX, float deltaMovementY);
     public ParallaxCameraDelegate onCameraTranslate;
     private float oldPosition;
     void Start()
@@ -17,8 +17,9 @@ public class ParallaxCamera : MonoBehaviour
         {
             if (onCameraTranslate != null)
             {
-                float delta = oldPosition - transform.position.x;
-                onCameraTranslate(delta);
+                float deltaX = oldPosition - transform.position.x;
+                float deltaY = oldPosition - transform.position.y;
+                onCameraTranslate(deltaX, deltaY);
             }
             oldPosition = transform.position.x;
         }
