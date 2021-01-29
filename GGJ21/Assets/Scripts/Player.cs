@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
         HandleSlopes();
         CheckForGround?.Invoke();
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.H))
         {
             currentSanity -= 9;
             Debug.Log(currentSanity);
@@ -198,10 +198,10 @@ public class Player : MonoBehaviour
 
     void ToggleGhost()
     {
-        isGhost = !isGhost;
-        playerSprite.color  = new Color(1,1,1, isGhost ? 0.5f : 1f);
-        Physics2D.IgnoreLayerCollision(9,11, !isGhost);
-        Physics2D.IgnoreLayerCollision(10,11, isGhost);
+        BlackBoard.gameManager.isGhost = !BlackBoard.gameManager.isGhost;
+        playerSprite.color  = new Color(1,1,1, BlackBoard.gameManager.isGhost ? 0.5f : 1f);
+        Physics2D.IgnoreLayerCollision(9,11, !BlackBoard.gameManager.isGhost);
+        Physics2D.IgnoreLayerCollision(10,11, BlackBoard.gameManager.isGhost);
     }
 
     public void StartClimb()
