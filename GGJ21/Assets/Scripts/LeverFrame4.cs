@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class LeverFrame4 : MonoBehaviour
 {
-    public GameObject gate;
+    public Animator animtorStatue;
+    public Animator animtorLever;
     public bool inRadius;
+
     void Update()
     {
         if (BlackBoard.gameManager.isGhost && inRadius)
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                Destroy(gate);
+                animtorLever.SetTrigger("push");
+                animtorStatue.SetTrigger("move");
             }
         }
     }

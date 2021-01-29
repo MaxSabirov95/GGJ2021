@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     private Vector2 groundAngleVector;
     private Collider2D playerCollider;
     public float currentSanity;
-    private bool isGhost;
+    bool isSanity;
     private SpriteRenderer playerSprite;
     private State playerState;
 
@@ -56,7 +56,6 @@ public class Player : MonoBehaviour
         instance = this;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         currentSanity = initialSanity;
@@ -79,8 +78,9 @@ public class Player : MonoBehaviour
         {
             currentSanity -= 9;
             Debug.Log(currentSanity);
-            if (currentSanity <= 40)
+            if (currentSanity <= 40&& !isSanity)
             {
+                isSanity = true;
                 BlackBoard.soundsManager.TimeOutWhispers(0, currentSanity);
             }
         }
@@ -149,6 +149,7 @@ public class Player : MonoBehaviour
         if (IsGrounded())
         {
             playerState.HandleStateTransition(this, StateTransition.Land);
+            BlackBoard.soundsManager.SoundsList(7);//jump sound
             CheckForGround = null;
         }
     }
