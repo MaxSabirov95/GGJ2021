@@ -9,7 +9,7 @@ public class ObjectGhost : MonoBehaviour
 
     void Update()
     {
-        ghostOn.gameObject.SetActive(BlackBoard.gameManager.isGhost ? true : false);
-        ghostOff.gameObject.SetActive(BlackBoard.gameManager.isGhost ? false : true);
+        ghostOn.enabled = (BlackBoard.gameManager.isGhost ? true : false);
+        ghostOff.enabled = (BlackBoard.gameManager.isGhost ? false : true);
     }
 }
