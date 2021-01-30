@@ -87,6 +87,6 @@ public class MainMenu : MonoBehaviour
         BlackBoard.soundsManager.UISoundsList(num);
         yield return new WaitForSeconds(1.6f);
         Time.timeScale = 1f;
-        SceneManager.LoadScene("Main Level Scene");
+        SceneManager.LoadScene("Game Scene FINAL");
     }
 }
