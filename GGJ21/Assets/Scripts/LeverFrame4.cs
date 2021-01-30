@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LeverFrame4 : MonoBehaviour
 {
-    public Animator animtorStatue;
+    //public Animator animtorStatue;
     public Animator animtorLever;
     public bool inRadius;
 
@@ -15,7 +15,7 @@ public class LeverFrame4 : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
             {
                 animtorLever.SetTrigger("push");
-                animtorStatue.SetTrigger("move");
+                //animtorStatue.SetTrigger("move");
             }
         }
     }
