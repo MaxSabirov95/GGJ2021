@@ -90,6 +90,7 @@ public class UIManager : MonoBehaviour
         Application.Quit();
     }
 
+<<<<<<< HEAD
     private void OnEnable()
     {
         musicSlider.value = MainMenu.musicValue;
@@ -101,4 +102,11 @@ public class UIManager : MonoBehaviour
         BlackBoard.soundsManager.UISoundsList(num);
         yield return new WaitForSeconds(0.05f);
     }
+=======
+    //private void OnEnable()
+    //{
+    //    musicSlider.value = MainMenu.musicValue;
+    //    sfxSlider.value = MainMenu.sfxValue;
+    //}
+>>>>>>> parent of 21ac223... Revert "Level 2"
 }
