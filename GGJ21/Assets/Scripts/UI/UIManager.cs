@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public static bool gameIsPaused = false;
 
     public GameObject pauseMenu;
+    public GameObject sanityBar;
     public AudioMixer audioMixer;
     public GameObject settingsMenu;
     public Slider musicSlider;
@@ -20,6 +21,7 @@ public class UIManager : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
+        sanityBar.SetActive(true);
     }
     void Update()
     {
@@ -42,6 +44,7 @@ public class UIManager : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
+        sanityBar.SetActive(true);
     }
 
     void Pause()
@@ -50,6 +53,7 @@ public class UIManager : MonoBehaviour
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         gameIsPaused = true;
+        sanityBar.SetActive(false);
     }
 
     public void LoadMenu()
@@ -63,6 +67,7 @@ public class UIManager : MonoBehaviour
         StartCoroutine(PlayPauseMenuSounds(1));
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(true);
+        sanityBar.SetActive(false);
     }
 
     public void Back()
@@ -70,6 +75,7 @@ public class UIManager : MonoBehaviour
         StartCoroutine(PlayPauseMenuSounds(0));
         pauseMenu.SetActive(true);
         settingsMenu.SetActive(false);
+        sanityBar.SetActive(false);
     }
 
     public void SetMusicVolume(float music)
