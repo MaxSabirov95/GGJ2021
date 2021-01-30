@@ -4,23 +4,12 @@ using UnityEngine;
 
 public class ObjectGhost : MonoBehaviour
 {
-    public GameObject ghostOn;
-    public GameObject ghostOff;
-    public bool reversed;
+    public SpriteRenderer ghostOn;
+    public SpriteRenderer ghostOff;
 
-    void Start()
+    void Update()
     {
-        BlackBoard.gameManager.ToggleGhost += TogglePlatform;
-    }
-
-    void TogglePlatform(bool ghost)
-    {
-        if (reversed)
-        {
-            ghost = !ghost;
-        }
-        ghostOn.SetActive(ghost);
-        ghostOff.SetActive(!ghost);
-        gameObject.layer = ghost ? 9 : 10;
+        ghostOn.enabled = (BlackBoard.gameManager.isGhost ? true : false);
+        ghostOff.enabled = (BlackBoard.gameManager.isGhost ? false : true);
     }
 }

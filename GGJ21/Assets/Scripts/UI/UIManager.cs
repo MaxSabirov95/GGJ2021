@@ -83,9 +83,9 @@ public class UIManager : MonoBehaviour
         Application.Quit();
     }
 
-    //private void OnEnable()
-    //{
-    //    musicSlider.value = MainMenu.musicValue;
-    //    sfxSlider.value = MainMenu.sfxValue;
-    //}
+    private void OnEnable()
+    {
+        musicSlider.value = MainMenu.musicValue;
+        sfxSlider.value = MainMenu.sfxValue;
+    }
 }
