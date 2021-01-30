@@ -53,4 +53,9 @@ public class GameManager : MonoBehaviour
             BlackBoard.soundsManager.MusicList(2);
         }
     }
+
+    public bool GetGhostStatus()
+    {
+        return isGhost;
+    }
 }
