@@ -95,7 +95,7 @@ public class UIManager : MonoBehaviour
         Debug.Log("Quitting game...");
         Application.Quit();
     }
-
+    
     private void OnEnable()
     {
         musicSlider.value = MainMenu.musicValue;

@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
@@ -34,6 +36,7 @@ public class Player : MonoBehaviour
     [Header("Climb Checking")]
     [SerializeField] private LayerMask climbLayer;
     [SerializeField] private float climbCheckRadius = 0.5f;
+    [Space] [SerializeField] private LayerMask ghostLayer;
 
     private Rigidbody2D playerRB;
     private Vector2 inputMovement;
@@ -45,6 +48,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer playerSprite;
     private bool inSafeZone;
     private State playerState;
+    private bool facingRight;
 
     delegate void PlayerAction();
     private PlayerAction DoActionByState;
@@ -71,6 +75,7 @@ public class Player : MonoBehaviour
         playerState = new Idle();
         DoActionByState = Move;
         InputByState = HandleInputNormal;
+        BlackBoard.gameManager.ToggleGhost += ChangePlayerGhostSprite;
     }
 
     void Update()
@@ -117,6 +122,7 @@ public class Player : MonoBehaviour
         float xMovement = Input.GetAxisRaw("Horizontal");
         playerState.HandleStateTransition(this, Mathf.Abs(xMovement) > 0 ? StateTransition.MovementDown : StateTransition.MovementUp);
         inputMovement = xMovement * groundAngleVector * moveSpeed;
+        CheckForFlip();
         if (Input.GetButtonDown("Jump"))
         {
             playerState.HandleStateTransition(this, StateTransition.Jump);
@@ -136,6 +142,14 @@ public class Player : MonoBehaviour
     private void HandleInputClimbing()
     {
         inputMovement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * climbSpeed;
+        CheckForFlip();
+    }
+
+    void CheckForFlip()
+    {
+        if (inputMovement.x > 0 && !facingRight || 
+            inputMovement.x < 0 && facingRight)
+            Flip();
     }
 
     public void Jump()
@@ -180,7 +194,7 @@ public class Player : MonoBehaviour
     private void Move()
     {
         playerRB.AddForce(inputMovement);
-        if (inputMovement.x != 0 && IsGrounded())
+        if (Mathf.Abs(inputMovement.x) > 0 && IsGrounded())
         {
             if (!walkSound.isPlaying)
             {
@@ -217,11 +231,9 @@ public class Player : MonoBehaviour
 
     void ToggleGhost()
     {
-        if (!BlackBoard.gameManager.isGhostAbilityPicked) return;
-        BlackBoard.gameManager.isGhost = !BlackBoard.gameManager.isGhost;
-        playerSprite.color  = new Color(1,1,1, BlackBoard.gameManager.isGhost ? 0.5f : 1f);
-        Physics2D.IgnoreLayerCollision(11,9, !BlackBoard.gameManager.isGhost);
-        Physics2D.IgnoreLayerCollision(11,10, BlackBoard.gameManager.isGhost);
+        if (!BlackBoard.gameManager.GetGhostAbilityPicked() ||
+            Physics2D.OverlapCircle(transform.position, climbCheckRadius, ghostLayer) != null) return;
+        BlackBoard.gameManager.ToggleGhostStatus();
     }
 
     public void StartClimb()
@@ -265,5 +277,16 @@ public class Player : MonoBehaviour
     public void SetInSafeZone(bool value)
     {
         inSafeZone = value;
+    }
+
+    void ChangePlayerGhostSprite(bool isGhost)
+    {
+        playerSprite.color = new Color(1, 1, 1, isGhost ? 0.5f : 1f);
+    }
+
+    void Flip()
+    {
+        facingRight = !facingRight;
+        transform.rotation = Quaternion.Euler(Vector3.up * (facingRight ? 180f : 0f));
     }
 }
