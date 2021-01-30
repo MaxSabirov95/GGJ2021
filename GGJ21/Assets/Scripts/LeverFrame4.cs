@@ -4,21 +4,11 @@ using UnityEngine;
 
 public class LeverFrame4 : MonoBehaviour
 {
-<<<<<<< HEAD
-    //public Animator animtorStatue;
-    public Animator animtorLever;
-    public bool inRadius;
-=======
+
     public Animator animatorStatue;
     public Animator animatorLever;
     bool inRadius;
     private bool canBeInteracted = true;
-
-    //void Start()
-    //{
-    //    BlackBoard.gameManager.ToggleGhost += LeverEnabled;
-    //}
->>>>>>> parent of 21ac223... Revert "Level 2"
 
     void Update()
     {
@@ -26,12 +16,8 @@ public class LeverFrame4 : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-<<<<<<< HEAD
-                animtorLever.SetTrigger("push");
-                //animtorStatue.SetTrigger("move");
-=======
+
                 StartCoroutine(StatueAnimating());
->>>>>>> parent of 21ac223... Revert "Level 2"
             }
         }
     }
