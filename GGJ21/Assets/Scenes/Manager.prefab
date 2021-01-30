@@ -74,6 +74,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9adeb0aebe266b34e92b21d5c3f064e0, type: 3}
   - {fileID: 8300000, guid: a9e131d65561b9b49a8523be7e10e824, type: 3}
   - {fileID: 8300000, guid: 81bdfe96a8e94c249b3135277823c820, type: 3}
+  - {fileID: 8300000, guid: fc1d7217e603f3e46b470eb653bcbd88, type: 3}
   UISounds:
   - {fileID: 8300000, guid: d9331b6c0370a0f42b4a5ead131bbc2c, type: 3}
   - {fileID: 8300000, guid: bcce6c8890581544788dadcf33d2eaaf, type: 3}

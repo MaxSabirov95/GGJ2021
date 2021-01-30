@@ -84,16 +84,13 @@ public class Player : MonoBehaviour
         HandleSlopes();
         CheckForGround?.Invoke();
 
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            currentSanity -= 9;
+            currentSanity -= Time.deltaTime;
             sanityBar.SetSenity(currentSanity);
             if (currentSanity <= 40 && !isSanity)
             {
                 isSanity = true;
                 BlackBoard.soundsManager.TimeOutWhispers(0, currentSanity);
             }
-        }
 
         //Debug.Log(CanClimb());
         //Debug.Log(playerState);

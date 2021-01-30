@@ -46,8 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d06506ff2e57cd40b2101f4bc5eeadc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGhostAbilityPicked: 0
-  isGhost: 0
+  level1: 0
+  level2: 0
+  safezone: 0
 --- !u!114 &1317134185389395703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,8 +73,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9adeb0aebe266b34e92b21d5c3f064e0, type: 3}
   - {fileID: 8300000, guid: a9e131d65561b9b49a8523be7e10e824, type: 3}
   - {fileID: 8300000, guid: 81bdfe96a8e94c249b3135277823c820, type: 3}
+  - {fileID: 8300000, guid: fc1d7217e603f3e46b470eb653bcbd88, type: 3}
+  UISounds: []
+  Musics: []
+  BackgroundSFX: {fileID: 0}
+  voicesSFX: {fileID: 0}
   BackgroundMusic: {fileID: 1317134185389395700}
-  voicesMusic: {fileID: 1317134185389395696}
 --- !u!82 &1317134185389395700
 AudioSource:
   m_ObjectHideFlags: 0
