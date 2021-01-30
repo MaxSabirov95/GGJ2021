@@ -8,7 +8,7 @@ public class GhostAbility : MonoBehaviour
     {
         if (col.CompareTag("Player"))
         {
-            BlackBoard.gameManager.isGhostAbilityPicked = true;
+            BlackBoard.gameManager.SetGhostAbilityPicked(true);
             Destroy(gameObject);
         }
     }
