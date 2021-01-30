@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
     private bool inSafeZone;
     private State playerState;
     private bool facingRight;
+    private Animator playerAnim;
 
     delegate void PlayerAction();
     private PlayerAction DoActionByState;
@@ -70,12 +71,13 @@ public class Player : MonoBehaviour
         currentSanity = initialSanity;
         sanityBar.SetMaxSenity(currentSanity);
         playerRB = GetComponent<Rigidbody2D>();
+        playerAnim = GetComponent<Animator>();
         playerCollider = GetComponent<Collider2D>();
         playerSprite = GetComponentInChildren<SpriteRenderer>();
         playerState = new Idle();
         DoActionByState = Move;
         InputByState = HandleInputNormal;
-        BlackBoard.gameManager.ToggleGhost += ChangePlayerGhostSprite;
+        BlackBoard.gameManager.ToggleGhost += value => playerAnim.SetBool("Is Ghost", value);
     }
 
     void Update()
@@ -118,6 +120,7 @@ public class Player : MonoBehaviour
     {
         float xMovement = Input.GetAxisRaw("Horizontal");
         playerState.HandleStateTransition(this, Mathf.Abs(xMovement) > 0 ? StateTransition.MovementDown : StateTransition.MovementUp);
+        playerAnim.SetFloat("Move Speed", Mathf.Abs(xMovement));
         inputMovement = xMovement * groundAngleVector * moveSpeed;
         CheckForFlip();
         if (Input.GetButtonDown("Jump"))
@@ -231,6 +234,7 @@ public class Player : MonoBehaviour
         if (!BlackBoard.gameManager.GetGhostAbilityPicked() ||
             Physics2D.OverlapCircle(transform.position, climbCheckRadius, ghostLayer) != null) return;
         BlackBoard.gameManager.ToggleGhostStatus();
+        //playerAnim.SetBool("Is Ghost", BlackBoard.gameManager.GetGhostStatus());
     }
 
     public void StartClimb()
@@ -274,11 +278,6 @@ public class Player : MonoBehaviour
     public void SetInSafeZone(bool value)
     {
         inSafeZone = value;
-    }
-
-    void ChangePlayerGhostSprite(bool isGhost)
-    {
-        playerSprite.color = new Color(1, 1, 1, isGhost ? 0.5f : 1f);
     }
 
     void Flip()

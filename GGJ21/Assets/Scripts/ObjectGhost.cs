@@ -8,9 +8,10 @@ public class ObjectGhost : MonoBehaviour
     public GameObject ghostOff;
     public bool reversed;
 
-    void Start()
+    void OnEnable()
     {
         BlackBoard.gameManager.ToggleGhost += TogglePlatform;
+        TogglePlatform(BlackBoard.gameManager.GetGhostStatus());
     }
 
     void TogglePlatform(bool ghost)
