@@ -7437,7 +7437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostOn: {fileID: 1963677501}
   ghostOff: {fileID: 1295296310}
-  reversed: 0
+  reversed: 1
 --- !u!251 &175249867
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -9494,8 +9494,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 798aaed321edeff4dae05e101c0fc81b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animatorStatue: {fileID: 0}
-  animatorLever: {fileID: 0}
+  animatorStatue: {fileID: 1991232302}
+  animatorLever: {fileID: 810029593}
 --- !u!4 &238185348
 Transform:
   m_ObjectHideFlags: 0
@@ -10836,7 +10836,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostOn: {fileID: 492543327}
   ghostOff: {fileID: 1214086049}
-  reversed: 0
+  reversed: 1
 --- !u!1 &260757122
 GameObject:
   m_ObjectHideFlags: 0
@@ -11474,8 +11474,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 798aaed321edeff4dae05e101c0fc81b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animatorStatue: {fileID: 0}
-  animatorLever: {fileID: 0}
+  animatorStatue: {fileID: 991718363}
+  animatorLever: {fileID: 1414951686}
 --- !u!4 &271094691
 Transform:
   m_ObjectHideFlags: 0
@@ -18699,7 +18699,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostOn: {fileID: 997085141}
   ghostOff: {fileID: 521380133}
-  reversed: 0
+  reversed: 1
 --- !u!251 &425800557
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -24808,7 +24808,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostOn: {fileID: 1416527092}
   ghostOff: {fileID: 1962141996}
-  reversed: 0
+  reversed: 1
 --- !u!1 &571596136
 GameObject:
   m_ObjectHideFlags: 0
@@ -26539,7 +26539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostOn: {fileID: 1511760741}
   ghostOff: {fileID: 533113758}
-  reversed: 0
+  reversed: 1
 --- !u!1 &616138645
 GameObject:
   m_ObjectHideFlags: 0
@@ -37991,7 +37991,7 @@ MonoBehaviour:
   climbCheckRadius: 0.5
   ghostLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   currentSanity: 0
   sanityBar: {fileID: 1510409708}
 --- !u!4 &948128166
@@ -44925,7 +44925,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostOn: {fileID: 2028572211}
   ghostOff: {fileID: 330543692}
-  reversed: 0
+  reversed: 1
 --- !u!1 &1132839349
 GameObject:
   m_ObjectHideFlags: 0
@@ -63497,7 +63497,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostOn: {fileID: 1565512423}
   ghostOff: {fileID: 744077438}
-  reversed: 0
+  reversed: 1
 --- !u!251 &1456278036
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -66069,7 +66069,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -11.222023}
+  m_Offset: {x: 6.8656387, y: -11.222023}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -66080,7 +66080,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 255.8, y: 145.62405}
+  m_Size: {x: 269.5313, y: 145.62405}
   m_EdgeRadius: 0
 --- !u!4 &1518785462
 Transform:
@@ -69940,7 +69940,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostOn: {fileID: 1131046043}
   ghostOff: {fileID: 943268210}
-  reversed: 0
+  reversed: 1
 --- !u!1 &1610347628
 GameObject:
   m_ObjectHideFlags: 0
@@ -70472,7 +70472,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostOn: {fileID: 1895580128}
   ghostOff: {fileID: 2139834125}
-  reversed: 0
+  reversed: 1
 --- !u!1 &1622620672
 GameObject:
   m_ObjectHideFlags: 0
@@ -73738,7 +73738,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostOn: {fileID: 1379031844}
   ghostOff: {fileID: 2043348896}
-  reversed: 0
+  reversed: 1
 --- !u!251 &1697445565
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -75201,7 +75201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostOn: {fileID: 1005275086}
   ghostOff: {fileID: 548995576}
-  reversed: 0
+  reversed: 1
 --- !u!1 &1727267557
 GameObject:
   m_ObjectHideFlags: 0
@@ -83043,7 +83043,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostOn: {fileID: 1006791604}
   ghostOff: {fileID: 1523842444}
-  reversed: 0
+  reversed: 1
 --- !u!1 &1913337631
 GameObject:
   m_ObjectHideFlags: 0
@@ -83523,7 +83523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostOn: {fileID: 1959704182}
   ghostOff: {fileID: 288707035}
-  reversed: 0
+  reversed: 1
 --- !u!1 &1936744233
 GameObject:
   m_ObjectHideFlags: 0
@@ -84478,7 +84478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostOn: {fileID: 1372034500}
   ghostOff: {fileID: 1053446941}
-  reversed: 0
+  reversed: 1
 --- !u!251 &1966494037
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -90330,7 +90330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostOn: {fileID: 119354996}
   ghostOff: {fileID: 319765512}
-  reversed: 0
+  reversed: 1
 --- !u!1 &2092667618
 GameObject:
   m_ObjectHideFlags: 0
