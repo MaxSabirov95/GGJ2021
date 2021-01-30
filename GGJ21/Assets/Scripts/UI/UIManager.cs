@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -36,6 +38,7 @@ public class UIManager : MonoBehaviour
 
     public void Resume()
     {
+        StartCoroutine(PlayPauseMenuSounds(1));
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
@@ -43,6 +46,7 @@ public class UIManager : MonoBehaviour
 
     void Pause()
     {
+        StartCoroutine(PlayPauseMenuSounds(2));
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         gameIsPaused = true;
@@ -50,18 +54,20 @@ public class UIManager : MonoBehaviour
 
     public void LoadMenu()
     {
-        Debug.Log("Loading menu...");
+        StartCoroutine(PlayPauseMenuSounds(1));
         SceneManager.LoadScene("Main Menu");
     }
 
     public void SettingsScreen()
     {
+        StartCoroutine(PlayPauseMenuSounds(1));
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(true);
     }
 
     public void Back()
     {
+        StartCoroutine(PlayPauseMenuSounds(0));
         pauseMenu.SetActive(true);
         settingsMenu.SetActive(false);
     }
@@ -79,6 +85,7 @@ public class UIManager : MonoBehaviour
 
     public void QuitGame()
     {
+        StartCoroutine(PlayPauseMenuSounds(1));
         Debug.Log("Quitting game...");
         Application.Quit();
     }
@@ -87,5 +94,11 @@ public class UIManager : MonoBehaviour
     {
         musicSlider.value = MainMenu.musicValue;
         sfxSlider.value = MainMenu.sfxValue;
+    }
+
+    IEnumerator PlayPauseMenuSounds (int num)
+    {
+        BlackBoard.soundsManager.UISoundsList(num);
+        yield return new WaitForSeconds(0.05f);
     }
 }

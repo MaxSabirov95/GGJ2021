@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -36,30 +38,33 @@ public class MainMenu : MonoBehaviour
 
     public void OpenSettings()
     {
+        StartCoroutine(PlayUISound(2));
         mainMenu.SetActive(false);
         settingsMenu.SetActive(true);
         creditMenu.SetActive(false);
     }
     public void OpenCredits()
     {
+        StartCoroutine(PlayUISound(2));
         mainMenu.SetActive(false);
         settingsMenu.SetActive(false);
         creditMenu.SetActive(true);
     }
     public void Back()
     {
+        StartCoroutine(PlayUISound(1));
         settingsMenu.SetActive(false);
         mainMenu.SetActive(true);
         creditMenu.SetActive(false);
     }
     public void LoadLevel()
     {
-        SceneManager.LoadScene("Main Level Scene");
-        Time.timeScale = 1f;        
+        StartCoroutine(PlayStartSound(0)); 
     }
 
     public void QuitGame()
     {
+        StartCoroutine(PlayUISound(2));
         Application.Quit();
     }
 
@@ -69,5 +74,19 @@ public class MainMenu : MonoBehaviour
         musicSlider.value = musicValue;
         SetSFXVolume(sfxValue);
         sfxSlider.value = sfxValue;
+    }
+
+    IEnumerator PlayUISound (int num)
+    {
+        BlackBoard.soundsManager.UISoundsList(num);
+        yield return new WaitForSeconds(0.05f);
+    }
+
+    IEnumerator PlayStartSound (int num)
+    {
+        BlackBoard.soundsManager.UISoundsList(num);
+        yield return new WaitForSeconds(1.6f);
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Main Level Scene");
     }
 }

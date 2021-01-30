@@ -5,6 +5,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     public AudioClip[] Sounds;
+    public AudioClip[] UISounds;
     public AudioSource BackgroundMusic;
     public AudioSource voicesMusic;
 
@@ -22,6 +23,10 @@ public class SoundManager : MonoBehaviour
     public void SoundsList(int SoundNumber)
     {
         AudioSrc.PlayOneShot(Sounds[SoundNumber]);
+    }//--Game sounds list
+    public void UISoundsList(int SoundNumber)
+    {
+        AudioSrc.PlayOneShot(UISounds[SoundNumber]);
     }//--Game sounds list
 
 
