@@ -83,7 +83,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         InputByState();
-        HandleSlopes();
+        //HandleSlopes();
         CheckForGround?.Invoke();
 
         if (!inSafeZone)
@@ -98,30 +98,30 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void HandleSlopes()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, ground);
-        if (hit)
-        {
-            Debug.DrawRay(hit.point, Vector2.Perpendicular(hit.normal), Color.green);
-            groundAngleVector = -Vector2.Perpendicular(hit.normal);
-            float xMovement = Input.GetAxisRaw("Horizontal");
+    //private void HandleSlopes()
+    //{
+    //    RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, ground);
+    //    if (hit)
+    //    {
+    //        Debug.DrawRay(hit.point, Vector2.Perpendicular(hit.normal), Color.green);
+    //        groundAngleVector = -Vector2.Perpendicular(hit.normal);
+    //        float xMovement = Input.GetAxisRaw("Horizontal");
 
-            if (Mathf.Abs(xMovement) < Mathf.Epsilon)
-            {
-                playerCollider.sharedMaterial = Vector2.Angle(hit.normal, Vector2.up) > 10f ? fullFrictionMaterial2D : slipperyMaterial2D;
-            }
-            else playerCollider.sharedMaterial = slipperyMaterial2D;
-        }
-        else groundAngleVector = Vector2.right;
-    }
+    //        if (Mathf.Abs(xMovement) < Mathf.Epsilon)
+    //        {
+    //            playerCollider.sharedMaterial = Vector2.Angle(hit.normal, Vector2.up) > 10f ? fullFrictionMaterial2D : slipperyMaterial2D;
+    //        }
+    //        else playerCollider.sharedMaterial = slipperyMaterial2D;
+    //    }
+    //    else groundAngleVector = Vector2.right;
+    //}
 
     private void HandleInputNormal()
     {
         float xMovement = Input.GetAxisRaw("Horizontal");
         playerState.HandleStateTransition(this, Mathf.Abs(xMovement) > 0 ? StateTransition.MovementDown : StateTransition.MovementUp);
         playerAnim.SetFloat("Move Speed", Mathf.Abs(xMovement));
-        inputMovement = xMovement * groundAngleVector * moveSpeed;
+        inputMovement = xMovement * Vector2.right * moveSpeed;
         CheckForFlip();
         if (Input.GetButtonDown("Jump"))
         {
