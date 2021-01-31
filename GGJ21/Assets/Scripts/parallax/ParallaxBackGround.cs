@@ -6,6 +6,8 @@ public class ParallaxBackGround : MonoBehaviour
 {
     public ParallaxCamera parallaxCamera;
     List<ParallaxLayer> parallaxLayers = new List<ParallaxLayer>();
+    public float parallaxXSpeed = 1f;
+    public float parallaxYSpeed = 1f;
 
     void Start()
     {
@@ -27,6 +29,8 @@ public class ParallaxBackGround : MonoBehaviour
             {
                 layer.name = "Layer-" + i;
                 parallaxLayers.Add(layer);
+                layer.parallaxFactorX *= parallaxXSpeed;
+                layer.parallaxFactorY *= parallaxYSpeed;
             }
         }
     }

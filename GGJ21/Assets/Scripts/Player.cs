@@ -85,6 +85,8 @@ public class Player : MonoBehaviour
         HandleSlopes();
         CheckForGround?.Invoke();
 
+        if (!inSafeZone)
+        {
             currentSanity -= Time.deltaTime;
             sanityBar.SetSenity(currentSanity);
             if (currentSanity <= 40 && !isSanity)
@@ -92,9 +94,7 @@ public class Player : MonoBehaviour
                 isSanity = true;
                 BlackBoard.soundsManager.TimeOutWhispers(0, currentSanity);
             }
-
-        //Debug.Log(CanClimb());
-        //Debug.Log(playerState);
+        }
     }
 
     private void HandleSlopes()
@@ -277,6 +277,10 @@ public class Player : MonoBehaviour
     public void SetInSafeZone(bool value)
     {
         inSafeZone = value;
+        if (value)
+        {
+            currentSanity = initialSanity;
+        }
     }
 
     void Flip()
