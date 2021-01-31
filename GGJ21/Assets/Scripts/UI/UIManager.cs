@@ -29,11 +29,12 @@ public class UIManager : MonoBehaviour
         {
             if(gameIsPaused)
             {
+                Back();
                 Resume();
             }
             else
             {
-               Pause();
+                Pause();
             }
         }
     }

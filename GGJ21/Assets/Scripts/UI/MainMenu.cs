@@ -29,6 +29,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1f;
         mainMenu.SetActive(true);
         settingsMenu.SetActive(false);
         creditMenu.SetActive(false);
