@@ -27,7 +27,6 @@ public class Player : MonoBehaviour
     [Space]
     [Header("Sanity")]
     [SerializeField] private float initialSanity = 100f;
-    [SerializeField] private float sanityDegrationSpeed = 5f;
     [Space]
     [Header("Physics Materials")]
     [SerializeField] private PhysicsMaterial2D slipperyMaterial2D;
