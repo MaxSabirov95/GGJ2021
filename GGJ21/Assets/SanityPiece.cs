@@ -15,10 +15,11 @@ public class SanityPiece : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //play victory sound, fade screen, then teleport back to tree
+            BlackBoard.soundsManager.SoundsList(13);
             OnPieceRetrieved();
             Player.instance.transform.position = teleportPosition.position;
             CameraController.instance.transform.position = teleportPosition.position;
-            Destroy(gameObject);
+            Destroy(gameObject,1f);
         }
     }
 }

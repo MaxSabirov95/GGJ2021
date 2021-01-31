@@ -169,7 +169,10 @@ public class Player : MonoBehaviour
         if (IsGrounded())
         {
             playerState.HandleStateTransition(this, StateTransition.Land);
-            BlackBoard.soundsManager.SoundsList(7);//jump sound
+            if(!BlackBoard.gameManager.GetGhostStatus())
+            {
+                BlackBoard.soundsManager.SoundsList(7);//jump sound
+            }
             CheckForGround = null;
         }
     }
@@ -194,7 +197,7 @@ public class Player : MonoBehaviour
     private void Move()
     {
         playerRB.AddForce(inputMovement);
-        if (Mathf.Abs(inputMovement.x) > 0 && IsGrounded())
+        if (Mathf.Abs(inputMovement.x) > 0 && IsGrounded() && !BlackBoard.gameManager.GetGhostStatus())
         {
             if (!walkSound.isPlaying)
             {
@@ -256,6 +259,10 @@ public class Player : MonoBehaviour
         {
             playerState.HandleStateTransition(this, StateTransition.MovementUp);
         }
+        if (!BlackBoard.soundsManager.voicesSFX.isPlaying)
+        {
+            BlackBoard.soundsManager.SoundsList(12);
+        }
     }
 
     public void SetNewState(State _s)
@@ -289,4 +296,5 @@ public class Player : MonoBehaviour
         facingRight = !facingRight;
         transform.rotation = Quaternion.Euler(Vector3.up * (facingRight ? 180f : 0f));
     }
+
 }

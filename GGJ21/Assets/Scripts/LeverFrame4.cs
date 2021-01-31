@@ -50,7 +50,10 @@ public class LeverFrame4 : MonoBehaviour
 
         yield return new WaitForSeconds(1.7f);
         animatorStatue.SetTrigger("move");
-        yield return new WaitForSeconds(2.1f);
+        yield return new WaitForSeconds(1.3f);
+        BlackBoard.soundsManager.SoundsList(14);
+        yield return new WaitForSeconds(1f);
+        
         CameraController.instance.FocusOnPoint(Player.instance.transform.position, true);
         Player.instance.enabled = true;
     }
