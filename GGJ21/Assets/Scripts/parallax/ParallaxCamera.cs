@@ -6,22 +6,22 @@ public class ParallaxCamera : MonoBehaviour
 {
     public delegate void ParallaxCameraDelegate(float deltaMovementX, float deltaMovementY);
     public ParallaxCameraDelegate onCameraTranslate;
-    private float oldPosition;
+    private Vector3 oldPosition;
     void Start()
     {
-        oldPosition = transform.position.x;
+        oldPosition = transform.position;
     }
     void Update()
     {
-        if (transform.position.x != oldPosition)
+        if (transform.position != oldPosition)
         {
             if (onCameraTranslate != null)
             {
-                float deltaX = oldPosition - transform.position.x;
-                float deltaY = oldPosition - transform.position.y;
+                float deltaX = oldPosition.x - transform.position.x;
+                float deltaY = oldPosition.y - transform.position.y;
                 onCameraTranslate(deltaX, deltaY);
             }
-            oldPosition = transform.position.x;
+            oldPosition = transform.position;
         }
     }
 }
