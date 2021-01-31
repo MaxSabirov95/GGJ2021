@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fog_Mat
-  m_Shader: {fileID: -6465566751694194690, guid: 1b7828f97047eeb48a9d980db29b59e8,
+  m_Name: BackgroundMat
+  m_Shader: {fileID: -6465566751694194690, guid: ec1df5def5ebea74f84326649e4f35a8,
     type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
@@ -20,19 +20,18 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _CurrentTex:
+        m_Texture: {fileID: 2800000, guid: f0ebf981104d0bf4189fd00068b5bae4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _TargetSprite:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_43A884E1: 0.01
-    - Vector1_48ADBDBB: 3
-    - Vector1_8D26749F: 3.88
-    - Vector1_A77DB6F8: 0.01
-    - Vector1_F7BC56C: 350
-    - Vector1_FB742DC6: 150
-    m_Colors:
-    - Color_D1727946: {r: 1, g: 1, b: 1, a: 0.19607843}
-    - Color_D9F0A34A: {r: 1, g: 1, b: 1, a: 0.39215687}
-    - _FogDirection: {r: 1, g: 0, b: 0, a: 0}
-    - _FogDirection_1: {r: -1, g: 0, b: 0, a: 0}
+    - _LerpValue: 0
+    m_Colors: []

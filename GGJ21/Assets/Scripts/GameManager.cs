@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public Action<bool> ToggleGhost;
 
-    bool isGhostAbilityPicked = true;
+    bool isGhostAbilityPicked;
     bool isGhost;
     public bool level1;
     public bool level2;

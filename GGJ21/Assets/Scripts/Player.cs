@@ -83,9 +83,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         InputByState();
-        //HandleSlopes();
         CheckForGround?.Invoke();
+        HandleSanity();
+    }
 
+    private void HandleSanity()
+    {
         if (!inSafeZone)
         {
             currentSanity -= Time.deltaTime;
@@ -97,24 +100,6 @@ public class Player : MonoBehaviour
             }
         }
     }
-
-    //private void HandleSlopes()
-    //{
-    //    RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, ground);
-    //    if (hit)
-    //    {
-    //        Debug.DrawRay(hit.point, Vector2.Perpendicular(hit.normal), Color.green);
-    //        groundAngleVector = -Vector2.Perpendicular(hit.normal);
-    //        float xMovement = Input.GetAxisRaw("Horizontal");
-
-    //        if (Mathf.Abs(xMovement) < Mathf.Epsilon)
-    //        {
-    //            playerCollider.sharedMaterial = Vector2.Angle(hit.normal, Vector2.up) > 10f ? fullFrictionMaterial2D : slipperyMaterial2D;
-    //        }
-    //        else playerCollider.sharedMaterial = slipperyMaterial2D;
-    //    }
-    //    else groundAngleVector = Vector2.right;
-    //}
 
     private void HandleInputNormal()
     {
@@ -227,17 +212,11 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireSphere(groundCheckPositionTransform.position, groundCheckRadius);
     }
 
-    public float GetSanityLevel()
-    {
-        return currentSanity;
-    }
-
     void ToggleGhost()
     {
         if (!BlackBoard.gameManager.GetGhostAbilityPicked() ||
             Physics2D.OverlapCircle(transform.position, climbCheckRadius, ghostLayer) != null) return;
         BlackBoard.gameManager.ToggleGhostStatus();
-        //playerAnim.SetBool("Is Ghost", BlackBoard.gameManager.GetGhostStatus());
     }
 
     public void StartClimb()
@@ -288,6 +267,7 @@ public class Player : MonoBehaviour
         if (value)
         {
             currentSanity = initialSanity;
+            sanityBar.SetSenity(currentSanity);
         }
     }
 

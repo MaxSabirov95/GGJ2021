@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SanityPiece : MonoBehaviour
 {
@@ -15,11 +16,18 @@ public class SanityPiece : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //play victory sound, fade screen, then teleport back to tree
-            BlackBoard.soundsManager.SoundsList(13);
-            OnPieceRetrieved();
-            Player.instance.transform.position = teleportPosition.position;
-            CameraController.instance.transform.position = teleportPosition.position;
-            Destroy(gameObject,1f);
+            try
+            {
+                BlackBoard.soundsManager.SoundsList(13);
+                OnPieceRetrieved();
+                Player.instance.transform.position = teleportPosition.position;
+                CameraController.instance.transform.position = teleportPosition.position;
+                Destroy(gameObject,1f);
+            }
+            catch (Exception e)
+            {
+                SceneManager.LoadScene("Thanks For Playing");
+            }
         }
     }
 }

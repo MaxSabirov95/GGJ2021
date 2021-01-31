@@ -43,6 +43,7 @@ public class LeverFrame4 : MonoBehaviour
 
     IEnumerator StatueAnimating()
     {
+        canBeInteracted = false;
         Player.instance.enabled = false;
         animatorLever.SetTrigger("push");
         yield return new WaitForSeconds(1.1f);

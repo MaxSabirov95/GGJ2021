@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,10 +19,18 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        pauseMenu.SetActive(false);
-        Time.timeScale = 1f;
-        gameIsPaused = false;
-        sanityBar.SetActive(true);
+        try
+        {
+            pauseMenu.SetActive(false);
+            Time.timeScale = 1f;
+            gameIsPaused = false;
+            sanityBar.SetActive(true);
+        }
+        catch (Exception e)
+        {
+            
+        }
+        
     }
     void Update()
     {
@@ -99,8 +108,16 @@ public class UIManager : MonoBehaviour
     
     private void OnEnable()
     {
-        musicSlider.value = MainMenu.musicValue;
-        sfxSlider.value = MainMenu.sfxValue;
+        try
+        {
+            musicSlider.value = MainMenu.musicValue;
+            sfxSlider.value = MainMenu.sfxValue;
+        }
+        catch (Exception e)
+        {
+            
+        }
+        
     }
 
     IEnumerator PlayPauseMenuSounds (int num)
